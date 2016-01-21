@@ -1,13 +1,21 @@
 package de.vegie1996.fhem_monkey;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 
-public class MainActivity extends AppCompatActivity {
+@EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.main_activity)
+public class MainActivity extends FHEMMonkeyActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @AfterViews
+    public void initViews() {
+
+    }
+
+    @OptionsItem(R.id.menu_settings)
+    public void onSettingsClicked() {
+        SettingsActivity_.intent(this).start();
     }
 }

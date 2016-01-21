@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId "de.vegie1996.fhem_monkey"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -39,7 +39,12 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
     apt 'org.androidannotations:androidannotations:3.3.2'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'org.androidannotations:androidannotations-api:3.3.2'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.scottyab:secure-preferences-lib:0.1.4'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
+        transitive = true
+    }
 }

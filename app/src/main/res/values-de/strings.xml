@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FHEM-Monkey</string>
+    <string name="settings">Einstellungen</string>
+    <string name="hostname">Serveradresse</string>
+    <string name="port">Port</string>
+    <string name="save">Speichern</string>
+    <string name="saved_settings">Einstellungen gespeichert</string>
+    <string name="loading">Lädt &#8230;</string>
+    <string name="username">Benutzername</string>
+    <string name="password">Passwort</string>
+</resources>
