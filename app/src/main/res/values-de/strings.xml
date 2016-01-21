@@ -8,4 +8,7 @@
     <string name="loading">Lädt &#8230;</string>
     <string name="username">Benutzername</string>
     <string name="password">Passwort</string>
+    <string name="use_https">HTTPS benutzen</string>
+    <string name="prefix_hint">Prefix ("/fhem")</string>
+    <string name="authentication">Authentifizierung</string>
 </resources>

@@ -14,6 +14,8 @@ public class Preferences {
     public static final String KEY_PORT = "key_port";
     public static final String KEY_USERNAME = "key_username";
     public static final String KEY_PASSWORD = "key_password";
+    public static final String KEY_HTTP_S = "key_http_s";
+    public static final String KEY_PREFIX = "key_prefix";
 
     public void putString(Context context, String key, String value) {
         SharedPreferences prefs = new SecurePreferences(context);
@@ -26,4 +28,5 @@ public class Preferences {
         SharedPreferences prefs = new SecurePreferences(context);
         return prefs.getString(key, defaultValue);
     }
+
 }
