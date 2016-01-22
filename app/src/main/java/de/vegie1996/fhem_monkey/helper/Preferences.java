@@ -2,6 +2,7 @@ package de.vegie1996.fhem_monkey.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.securepreferences.SecurePreferences;
 
@@ -18,14 +19,29 @@ public class Preferences {
     public static final String KEY_PREFIX = "key_prefix";
 
     public void putString(Context context, String key, String value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    /**
+     * Only time you should use putSecureString method is when you store the password.
+     **/
+    public void putSecureString(Context context, String key, String value) {
         SharedPreferences prefs = new SecurePreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key, value);
         editor.commit();
     }
 
-    public String getString(Context context, String key, String defaultValue) {
+    public String getSecureString(Context context, String key, String defaultValue) {
         SharedPreferences prefs = new SecurePreferences(context);
+        return prefs.getString(key, defaultValue);
+    }
+
+    public String getString(Context context, String key, String defaultValue) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(key, defaultValue);
     }
 

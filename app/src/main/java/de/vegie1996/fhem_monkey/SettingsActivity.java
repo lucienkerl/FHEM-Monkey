@@ -57,8 +57,8 @@ public class SettingsActivity extends FHEMMonkeyActivity {
         Preferences preferences = new Preferences();
         String hostname = preferences.getString(getApplicationContext(), Preferences.KEY_HOSTNAME, "");
         String port = preferences.getString(getApplicationContext(), Preferences.KEY_PORT, "8083");
-        String username = preferences.getString(getApplicationContext(), Preferences.KEY_USERNAME, "");
-        String password = preferences.getString(getApplicationContext(), Preferences.KEY_PASSWORD, "");
+        String username = preferences.getSecureString(getApplicationContext(), Preferences.KEY_USERNAME, "");
+        String password = preferences.getSecureString(getApplicationContext(), Preferences.KEY_PASSWORD, "");
         String https = preferences.getString(getApplicationContext(), Preferences.KEY_HTTP_S, "http");
         String prefix = preferences.getString(getApplicationContext(), Preferences.KEY_PREFIX, "/fhem");
 
@@ -83,8 +83,8 @@ public class SettingsActivity extends FHEMMonkeyActivity {
         Preferences preferences = new Preferences();
         preferences.putString(getApplicationContext(), Preferences.KEY_HOSTNAME, inputHostname.getText().toString());
         preferences.putString(getApplicationContext(), Preferences.KEY_PORT, inputPort.getText().toString());
-        preferences.putString(getApplicationContext(), Preferences.KEY_USERNAME, inputUsername.getText().toString());
-        preferences.putString(getApplicationContext(), Preferences.KEY_PASSWORD, inputPassword.getText().toString());
+        preferences.putSecureString(getApplicationContext(), Preferences.KEY_USERNAME, inputUsername.getText().toString());
+        preferences.putSecureString(getApplicationContext(), Preferences.KEY_PASSWORD, inputPassword.getText().toString());
         preferences.putString(getApplicationContext(), Preferences.KEY_PREFIX, inputPrefix.getText().toString());
         if (useHttps.isChecked()) {
             preferences.putString(getApplicationContext(), Preferences.KEY_HTTP_S, "https");

@@ -2,6 +2,7 @@ package de.vegie1996.fhem_monkey.helper;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -21,14 +22,16 @@ public class CustomJSONObjectRequest extends JsonObjectRequest {
 
     public CustomJSONObjectRequest(Context context, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         super(url, jsonRequest, listener, errorListener);
+        Log.d("Request", "url: " + url);
         this.context = context;
     }
+
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         Preferences preferences = new Preferences();
-        String username = preferences.getString(context, Preferences.KEY_USERNAME, "");
-        String password = preferences.getString(context, Preferences.KEY_PASSWORD, "");
+        String username = preferences.getSecureString(context, Preferences.KEY_USERNAME, "");
+        String password = preferences.getSecureString(context, Preferences.KEY_PASSWORD, "");
         HashMap<String, String> params = new HashMap<String, String>();
         String creds = String.format("%s:%s", username, password);
         String auth = "Basic " + Base64.encodeToString(creds.getBytes(), Base64.DEFAULT);
