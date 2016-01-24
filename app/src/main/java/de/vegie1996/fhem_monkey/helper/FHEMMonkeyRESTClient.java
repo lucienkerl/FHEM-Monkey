@@ -2,7 +2,9 @@ package de.vegie1996.fhem_monkey.helper;
 
 import android.content.Context;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
@@ -37,6 +39,7 @@ public final class FHEMMonkeyRESTClient {
                 fhemMonkeyRESTClientInterface.onError(error);
             }
         });
+        request.setRetryPolicy(new DefaultRetryPolicy(15000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(context).add(request);
     }
 
