@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Osiris on 24.01.2016.
  */
@@ -22,8 +25,8 @@ public class LevelsTable implements FhemMonkeyTable {
     public String getCreateCommand() {
         return "CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMNNAME_LEVELS_ID + " INTEGER PRIMARY KEY," +
-                COLUMNNAME_LEVELS_NAME + "TEXT, " +
-                COLUMNNAME_LEVELS_ICON + "TEXT, " +
+                COLUMNNAME_LEVELS_NAME + " TEXT, " +
+                COLUMNNAME_LEVELS_ICON + " TEXT, " +
                 COLUMNNAME_LEVELS_PARENT_ID + " INTEGER);";
     }
 
@@ -34,23 +37,33 @@ public class LevelsTable implements FhemMonkeyTable {
 
     /* Inner class that defines the table contents */
     public static class LevelsEntry {
-        private int id;
+        private int id = -1;
         private String name;
         private String icon;
-        private int parentId;
+        private int parentId = -1;
 
-        public static LevelsEntry fromCursor(Cursor c) {
-            LevelsEntry entry = new LevelsEntry();
-            entry.id = c.getInt(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_ID));
-            entry.name = c.getString(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_NAME));
-            entry.icon = c.getString(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_ICON));
-            entry.parentId = c.getInt(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_PARENT_ID));
-            return entry;
+        public static List<LevelsEntry> fromCursor(Cursor c) {
+            List<LevelsEntry> levels = new ArrayList<>();
+            if (c.moveToFirst()){
+                while(!c.isAfterLast()){
+                    LevelsEntry entry = new LevelsEntry();
+                    entry.id = c.getInt(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_ID));
+                    entry.name = c.getString(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_NAME));
+                    entry.icon = c.getString(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_ICON));
+                    entry.parentId = c.getInt(c.getColumnIndex(LevelsTable.COLUMNNAME_LEVELS_PARENT_ID));
+                    levels.add(entry);
+                    c.moveToNext();
+                }
+            }
+            c.close();
+            return levels;
         }
 
         public ContentValues getContentValues() {
             ContentValues cv = new ContentValues();
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_ID, id);
+            if (id > -1) {
+                cv.put(LevelsTable.COLUMNNAME_LEVELS_ID, id);
+            }
             cv.put(LevelsTable.COLUMNNAME_LEVELS_NAME, name);
             cv.put(LevelsTable.COLUMNNAME_LEVELS_ICON, icon);
             cv.put(LevelsTable.COLUMNNAME_LEVELS_PARENT_ID, parentId);
