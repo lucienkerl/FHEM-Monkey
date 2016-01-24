@@ -54,12 +54,22 @@
                 android:id="@+id/use_https"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:checked="false"
                 android:text="@string/use_https" />
 
+            <Switch
+                android:id="@+id/trust_certificates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:checked="false"
+                android:text="@string/trust_certificates" />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
 
                 <EditText
                     android:id="@+id/input_prefix"

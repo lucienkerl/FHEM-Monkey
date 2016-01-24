@@ -17,6 +17,7 @@ public class Preferences {
     public static final String KEY_PASSWORD = "key_password";
     public static final String KEY_HTTP_S = "key_http_s";
     public static final String KEY_PREFIX = "key_prefix";
+    public static final String KEY_TRUST_CERTIFICATES = "key_trust_certificates";
 
     public void putString(Context context, String key, String value) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

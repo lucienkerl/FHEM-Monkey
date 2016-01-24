@@ -11,4 +11,5 @@
     <string name="use_https">HTTPS benutzen</string>
     <string name="prefix_hint">Prefix ("/fhem")</string>
     <string name="authentication">Authentifizierung</string>
+    <string name="trust_certificates">Allen Zertifikaten vertrauen (nicht empfohlen)</string>
 </resources>

@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
@@ -38,6 +39,9 @@ public class SettingsActivity extends FHEMMonkeyActivity {
     @ViewById(R.id.use_https)
     Switch useHttps;
 
+    @ViewById(R.id.trust_certificates)
+    Switch trustCertificates;
+
     MaterialDialog dialog;
 
     @AfterViews
@@ -60,20 +64,23 @@ public class SettingsActivity extends FHEMMonkeyActivity {
         String username = preferences.getSecureString(getApplicationContext(), Preferences.KEY_USERNAME, "");
         String password = preferences.getSecureString(getApplicationContext(), Preferences.KEY_PASSWORD, "");
         String https = preferences.getString(getApplicationContext(), Preferences.KEY_HTTP_S, "http");
+        String certificates = preferences.getString(getApplicationContext(), Preferences.KEY_TRUST_CERTIFICATES, "0");
         String prefix = preferences.getString(getApplicationContext(), Preferences.KEY_PREFIX, "/fhem");
 
-        setInputs(hostname, port, username, password, https, prefix);
+        setInputs(hostname, port, username, password, https, certificates, prefix);
     }
 
     @UiThread
-    public void setInputs(String hostname, String port, String username, String password, String https, String prefix) {
+    public void setInputs(String hostname, String port, String username, String password, String https, String certificates, String prefix) {
         inputHostname.setText(hostname);
         inputPort.setText(port);
         inputUsername.setText(username);
         inputPassword.setText(password);
         inputPrefix.setText(prefix);
-        if (https.equals("https")) useHttps.setChecked(true);
-        else useHttps.setChecked(false);
+        useHttps.setChecked(https.equals("https"));
+        trustCertificates.setChecked(certificates.equals("1"));
+
+        trustCertificates.setEnabled(useHttps.isChecked());
 
         dismissDialog();
     }
@@ -86,11 +93,9 @@ public class SettingsActivity extends FHEMMonkeyActivity {
         preferences.putSecureString(getApplicationContext(), Preferences.KEY_USERNAME, inputUsername.getText().toString());
         preferences.putSecureString(getApplicationContext(), Preferences.KEY_PASSWORD, inputPassword.getText().toString());
         preferences.putString(getApplicationContext(), Preferences.KEY_PREFIX, inputPrefix.getText().toString());
-        if (useHttps.isChecked()) {
-            preferences.putString(getApplicationContext(), Preferences.KEY_HTTP_S, "https");
-        } else {
-            preferences.putString(getApplicationContext(), Preferences.KEY_HTTP_S, "http");
-        }
+        preferences.putString(getApplicationContext(), Preferences.KEY_HTTP_S, useHttps.isChecked() ? "https" : "http");
+        preferences.putString(getApplicationContext(), Preferences.KEY_TRUST_CERTIFICATES, trustCertificates.isChecked() ? "1" : "0");
+
         showSuccessAndDismissActivity();
     }
 
@@ -105,6 +110,11 @@ public class SettingsActivity extends FHEMMonkeyActivity {
     public void dismissDialog() {
         if (dialog != null)
             dialog.dismiss();
+    }
+
+    @Click(R.id.use_https)
+    public void onHttpsClicked() {
+        trustCertificates.setEnabled(useHttps.isChecked());
     }
 
     public void showLoadingDialog() {
