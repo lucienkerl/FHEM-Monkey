@@ -20,8 +20,12 @@ public final class FHEMMonkeyRESTClient {
         String hostname = preferences.getString(context, Preferences.KEY_HOSTNAME, "");
         String port = preferences.getString(context, Preferences.KEY_PORT, "");
         String http = preferences.getString(context, Preferences.KEY_HTTP_S, "");
+        String trustCertificates = preferences.getString(context, Preferences.KEY_TRUST_CERTIFICATES, "");
         String prefix = preferences.getString(context, Preferences.KEY_PREFIX, "");
         String url = http + "://" + hostname + ":" + port + prefix + JSONLIST_URL_APPEND;
+        if (http.equals("https") && trustCertificates.equals("1")) {
+            TrustAllCertificates.trustAll();
+        }
         CustomJSONObjectRequest request = new CustomJSONObjectRequest(context, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
