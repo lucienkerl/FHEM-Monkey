@@ -89,6 +89,9 @@ public class MainActivity extends FHEMMonkeyActivity {
         SQLiteDatabase db = new FhemMonkeyDatabase(this).getWritableDatabase();
         db.execSQL("DELETE FROM " + LevelsTable.TABLE_NAME);
         for (FHEMConfigResponse.FHEMDevice device : response.getResults()) {
+            if (device.getInternals().get("TYPE").equals("notify")) {
+                continue;
+            }
             int idOfDeviceType;
             if (device.getAttributes().containsKey("room") && !rooms.contains(device.getAttributes().get("room"))) {
                 // Room doesn't exist yet, create it
@@ -105,7 +108,7 @@ public class MainActivity extends FHEMMonkeyActivity {
             // Room exists, check if type exists in room
             // First we need the id of the room
             Cursor c = db.query(LevelsTable.TABLE_NAME,
-                    new String[] { LevelsTable.COLUMNNAME_LEVELS_ID, LevelsTable.COLUMNNAME_LEVELS_NAME, LevelsTable.COLUMNNAME_LEVELS_ICON, LevelsTable.COLUMNNAME_LEVELS_PARENT_ID },
+                    LevelsTable.getColumns(),
                     LevelsTable.COLUMNNAME_LEVELS_NAME + " = ?",
                     new String[] { device.getAttributes().get("room") },
                     null,
@@ -118,7 +121,7 @@ public class MainActivity extends FHEMMonkeyActivity {
 
             // Then we need to check if there is an entry with the room id and the type in our database
             c = db.query(LevelsTable.TABLE_NAME,
-                    new String[] { LevelsTable.COLUMNNAME_LEVELS_ID, LevelsTable.COLUMNNAME_LEVELS_NAME, LevelsTable.COLUMNNAME_LEVELS_ICON, LevelsTable.COLUMNNAME_LEVELS_PARENT_ID },
+                    LevelsTable.getColumns(),
                     LevelsTable.COLUMNNAME_LEVELS_NAME + " = ? AND " + LevelsTable.COLUMNNAME_LEVELS_PARENT_ID + " = ?",
                     new String[] { strDeviceType, Integer.toString(roomId) },
                     null,
@@ -140,15 +143,13 @@ public class MainActivity extends FHEMMonkeyActivity {
 
 
             // Now we can store the device itself in our database
-            level = new LevelsTable.LevelsEntry();
-            level.setName(device.getName());
-            level.setParentId(idOfDeviceType);
+            level = LevelsTable.LevelsEntry.fromDevice(device, idOfDeviceType);
             db.insert(LevelsTable.TABLE_NAME, null, level.getContentValues());
         }
 
         // To check if stored everything correctly, print it to the console
         Cursor c = db.query(LevelsTable.TABLE_NAME,
-                new String[] { LevelsTable.COLUMNNAME_LEVELS_ID, LevelsTable.COLUMNNAME_LEVELS_NAME, LevelsTable.COLUMNNAME_LEVELS_ICON, LevelsTable.COLUMNNAME_LEVELS_PARENT_ID },
+                LevelsTable.getColumns(),
                 LevelsTable.COLUMNNAME_LEVELS_PARENT_ID + " = ?",
                 new String[] { "-1" },
                 null,
@@ -159,7 +160,7 @@ public class MainActivity extends FHEMMonkeyActivity {
             Log.d("Database", room.getName());
 
             c = db.query(LevelsTable.TABLE_NAME,
-                    new String[] { LevelsTable.COLUMNNAME_LEVELS_ID, LevelsTable.COLUMNNAME_LEVELS_NAME, LevelsTable.COLUMNNAME_LEVELS_ICON, LevelsTable.COLUMNNAME_LEVELS_PARENT_ID },
+                    LevelsTable.getColumns(),
                     LevelsTable.COLUMNNAME_LEVELS_PARENT_ID + " = ?",
                     new String[] { Integer.toString(room.getId()) },
                     null,
@@ -170,7 +171,7 @@ public class MainActivity extends FHEMMonkeyActivity {
                 Log.d("Database", "   " + deviceType.getName());
 
                 c = db.query(LevelsTable.TABLE_NAME,
-                        new String[] { LevelsTable.COLUMNNAME_LEVELS_ID, LevelsTable.COLUMNNAME_LEVELS_NAME, LevelsTable.COLUMNNAME_LEVELS_ICON, LevelsTable.COLUMNNAME_LEVELS_PARENT_ID },
+                        LevelsTable.getColumns(),
                         LevelsTable.COLUMNNAME_LEVELS_PARENT_ID + " = ?",
                         new String[] { Integer.toString(deviceType.getId()) },
                         null,
