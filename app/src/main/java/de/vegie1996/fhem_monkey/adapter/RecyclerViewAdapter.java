@@ -11,16 +11,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.vegie1996.fhem_monkey.R;
-import de.vegie1996.fhem_monkey.networking.FHEMConfigResponse;
+import de.vegie1996.fhem_monkey.database.tables.LevelsTable;
 
 /**
  * Created by lucienkerl on 22/01/16.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder> {
 
-    List<FHEMConfigResponse.FHEMDevice> deviceList;
+    List<LevelsTable.LevelsEntry> deviceList;
 
-    public RecyclerViewAdapter(List<FHEMConfigResponse.FHEMDevice> deviceList) {
+    public RecyclerViewAdapter(List<LevelsTable.LevelsEntry> deviceList) {
         this.deviceList = deviceList;
     }
 

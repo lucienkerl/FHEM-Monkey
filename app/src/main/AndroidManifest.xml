@@ -10,8 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity_">
+        <activity android:name=".views.MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +18,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity_"
+            android:name=".views.SettingsActivity_"
             android:label="@string/settings" />
+
+        <activity android:name=".views.DeviceConfigurationActivity_" />
     </application>
 
 </manifest>

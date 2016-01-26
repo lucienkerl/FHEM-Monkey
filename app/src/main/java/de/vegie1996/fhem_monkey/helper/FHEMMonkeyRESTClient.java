@@ -4,11 +4,13 @@ import android.content.Context;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.vegie1996.fhem_monkey.networking.FHEMConfigResponse;
 
 /**
  * Created by lucienkerl on 21/01/16.
@@ -31,7 +33,13 @@ public final class FHEMMonkeyRESTClient {
         CustomJSONObjectRequest request = new CustomJSONObjectRequest(context, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                fhemMonkeyRESTClientInterface.onSuccess(response);
+                FHEMConfigResponse fhemConfigResponse = new FHEMConfigResponse();
+                try {
+                    fhemConfigResponse.fillFromJSON(response);
+                    fhemMonkeyRESTClientInterface.onSuccess(fhemConfigResponse);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -44,7 +52,7 @@ public final class FHEMMonkeyRESTClient {
     }
 
     public interface FHEMMonkeyRESTClientInterface {
-        void onSuccess(JSONObject response);
+        void onSuccess(FHEMConfigResponse response);
 
         void onError(VolleyError error);
     }

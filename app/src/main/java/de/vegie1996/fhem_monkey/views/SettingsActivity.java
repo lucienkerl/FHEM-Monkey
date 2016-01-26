@@ -1,4 +1,4 @@
-package de.vegie1996.fhem_monkey;
+package de.vegie1996.fhem_monkey.views;
 
 import android.widget.EditText;
 import android.widget.Switch;
@@ -15,6 +15,8 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import de.vegie1996.fhem_monkey.R;
+import de.vegie1996.fhem_monkey.helper.FHEMMonkeyActivity;
 import de.vegie1996.fhem_monkey.helper.Preferences;
 
 @EActivity(R.layout.activity_settings)
