@@ -52,4 +52,5 @@ dependencies {
         transitive = true
     }
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile 'com.mikepenz:iconics-core:2.5.5@aar'
 }

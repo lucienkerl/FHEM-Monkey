@@ -15,3 +15,4 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class de.vegie1996.fhem_monkey.helper.FhemMonkeyIcons { *; }
