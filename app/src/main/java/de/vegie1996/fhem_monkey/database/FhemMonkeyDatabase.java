@@ -34,4 +34,5 @@ public class FhemMonkeyDatabase extends SQLiteOpenHelper{
         }
         onCreate(db);
     }
+
 }

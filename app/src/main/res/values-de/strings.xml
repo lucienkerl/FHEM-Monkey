@@ -12,4 +12,6 @@
     <string name="prefix_hint">Prefix ("/fhem")</string>
     <string name="authentication">Authentifizierung</string>
     <string name="trust_certificates">Allen Zertifikaten vertrauen (nicht empfohlen)</string>
+    <string name="device_configuration_title">Geräte Konfigurieren</string>
+    <string name="import_devices">Geräte importieren</string>
 </resources>

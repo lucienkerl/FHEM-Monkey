@@ -1,4 +1,4 @@
-package de.vegie1996.fhem_monkey;
+package de.vegie1996.fhem_monkey.helper;
 
 import android.support.v7.app.AppCompatActivity;
 
