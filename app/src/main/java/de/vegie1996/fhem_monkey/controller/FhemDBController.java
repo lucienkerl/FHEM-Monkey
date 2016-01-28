@@ -78,7 +78,7 @@ public class FhemDBController {
         // Collect all rooms from the response
         Set<String> rooms = new HashSet<>();
         SQLiteDatabase db = new FhemMonkeyDatabase(context).getWritableDatabase();
-        db.execSQL("DELETE FROM " + LevelsTable.TABLE_NAME);
+        //db.execSQL("DELETE FROM " + LevelsTable.TABLE_NAME);
         for (FHEMConfigResponse.FHEMDevice device : deviceList) {
             int idOfDeviceType;
             if (device.getAttributes().containsKey("room") && !rooms.contains(device.getAttributes().get("room"))) {

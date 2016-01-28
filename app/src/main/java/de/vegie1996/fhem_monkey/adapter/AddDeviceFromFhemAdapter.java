@@ -125,6 +125,10 @@ public class AddDeviceFromFhemAdapter extends BaseExpandableListAdapter {
         return checkedItems;
     }
 
+    public void setCheckedItems(List<FHEMConfigResponse.FHEMDevice> checkedItems) {
+        this.checkedItems = checkedItems;
+    }
+
     public interface CheckedButtonInterface {
         void checkedButton(int groupPosition, int childPosition, boolean isChecked);
     }

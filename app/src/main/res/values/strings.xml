@@ -14,4 +14,5 @@
     <string name="trust_certificates">Trust all Certificates (not recommended)</string>
     <string name="device_configuration_title">Device Configuration</string>
     <string name="import_devices">Import Devices</string>
+    <string name="import_devices_successfull">Successfully imported devices</string>
 </resources>

@@ -1,8 +1,12 @@
 package de.vegie1996.fhem_monkey.views;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
 
@@ -32,10 +36,18 @@ public class AddDeviceFromFhemFragment extends Fragment {
     @ViewById(R.id.list_view)
     ExpandableListView listView;
 
+    @ViewById(R.id.progressBar)
+    ProgressBar progressBar;
+
+    @ViewById(R.id.ll_root)
+    LinearLayout linearLayout;
+
     AddDeviceFromFhemAdapter adapter;
 
     @AfterViews
     public void initViews() {
+        progressBar.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
         FHEMMonkeyRESTClient.getFHEMConfig(getActivity(), new FHEMMonkeyRESTClient.FHEMMonkeyRESTClientInterface() {
             @Override
             public void onSuccess(FHEMConfigResponse response) {
@@ -72,6 +84,8 @@ public class AddDeviceFromFhemFragment extends Fragment {
     }
 
     public void setAdapter(LinkedHashMap<String, List<FHEMConfigResponse.FHEMDevice>> roomsWithChildsList) {
+        progressBar.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
         adapter = new AddDeviceFromFhemAdapter(getActivity(), roomsWithChildsList, new AddDeviceFromFhemAdapter.CheckedButtonInterface() {
             @Override
             public void checkedButton(int groupPosition, int childPosition, boolean isChecked) {
@@ -86,5 +100,9 @@ public class AddDeviceFromFhemFragment extends Fragment {
         List<FHEMConfigResponse.FHEMDevice> checkedDevices = adapter.getCheckedItems();
         FhemDBController dbController = new FhemDBController(getActivity());
         dbController.importIntoDataBase(checkedDevices);
+
+        Snackbar.make(linearLayout, getResources().getString(R.string.import_devices_successfull), Snackbar.LENGTH_SHORT).show();
+        adapter.setCheckedItems(new ArrayList<FHEMConfigResponse.FHEMDevice>());
+        adapter.notifyDataSetChanged();
     }
 }

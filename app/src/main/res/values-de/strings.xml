@@ -14,4 +14,6 @@
     <string name="trust_certificates">Allen Zertifikaten vertrauen (nicht empfohlen)</string>
     <string name="device_configuration_title">Geräte Konfigurieren</string>
     <string name="import_devices">Geräte importieren</string>
+    <string name="import_devices_successfull">Geräte erfolgreich importiert</string>
+    <string name="define_font_FhemMonkeyIcons">de.vegie1996.fhem_monkey.helper.FhemMonkeyIcons</string>
 </resources>
