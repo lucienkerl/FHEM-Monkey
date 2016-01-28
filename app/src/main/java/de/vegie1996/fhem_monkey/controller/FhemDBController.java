@@ -176,7 +176,7 @@ public class FhemDBController {
                 null);
         List<LevelsTable.LevelsEntry> dbRooms = LevelsTable.LevelsEntry.fromCursor(c);
         for (LevelsTable.LevelsEntry room : dbRooms) {
-            Log.d("Database", room.getName());
+            Log.d("Database", "id:" + room.getId() + " " + room.getName() + " parentid: " + room.getParentId());
 
             c = db.query(LevelsTable.TABLE_NAME,
                     new String[]{LevelsTable.COLUMNNAME_LEVELS_ID,
@@ -197,7 +197,7 @@ public class FhemDBController {
                     null);
             List<LevelsTable.LevelsEntry> deviceTypes = LevelsTable.LevelsEntry.fromCursor(c);
             for (LevelsTable.LevelsEntry deviceType : deviceTypes) {
-                Log.d("Database", "   " + deviceType.getName());
+                Log.d("Database", "id:" + deviceType.getId() + " " + "   " + deviceType.getName() + " parentid: " + deviceType.getParentId());
 
                 c = db.query(LevelsTable.TABLE_NAME,
                         new String[]{LevelsTable.COLUMNNAME_LEVELS_ID,
@@ -219,7 +219,7 @@ public class FhemDBController {
                 List<LevelsTable.LevelsEntry> devices = LevelsTable.LevelsEntry.fromCursor(c);
 
                 for (LevelsTable.LevelsEntry device : devices) {
-                    Log.d("Database", "      " + device.getName());
+                    Log.d("Database", "id:" + device.getId() + " " + "      " + device.getName() + " parentid: " + device.getParentId());
                 }
             }
         }

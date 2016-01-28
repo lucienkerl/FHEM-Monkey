@@ -3,9 +3,9 @@ package de.vegie1996.fhem_monkey.database.tables;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import de.vegie1996.fhem_monkey.networking.FHEMConfigResponse;
 
@@ -13,10 +13,6 @@ import de.vegie1996.fhem_monkey.networking.FHEMConfigResponse;
  * Created by Osiris on 24.01.2016.
  */
 public class LevelsTable implements FhemMonkeyTable {
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
-    public LevelsTable() {}
-
     public static final String TABLE_NAME = "levels";
     public static final String COLUMNNAME_LEVELS_ID = "id";
     public static final String COLUMNNAME_LEVELS_NAME = "name";
@@ -29,6 +25,11 @@ public class LevelsTable implements FhemMonkeyTable {
     public static final String COLUMNNAME_LEVELS_READING_BOTTOM_LEFT = "reading_bottom_left";
     public static final String COLUMNNAME_LEVELS_READING_BOTTOM_CENTER = "reading_bottom_center";
     public static final String COLUMNNAME_LEVELS_READING_BOTTOM_RIGHT = "reading_bottom_right";
+
+    // To prevent someone from accidentally instantiating the contract class,
+    // give it an empty constructor.
+    public LevelsTable() {
+    }
 
     public static String[] getColumns() {
         return new String[]{
@@ -68,7 +69,7 @@ public class LevelsTable implements FhemMonkeyTable {
     }
 
     /* Inner class that defines the table contents */
-    public static class LevelsEntry {
+    public static class LevelsEntry implements Serializable {
         private int id = -1;
         private String name;
         private String fhemName;
@@ -105,24 +106,6 @@ public class LevelsTable implements FhemMonkeyTable {
             return levels;
         }
 
-        public ContentValues getContentValues() {
-            ContentValues cv = new ContentValues();
-            if (id > -1) {
-                cv.put(LevelsTable.COLUMNNAME_LEVELS_ID, id);
-            }
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_NAME, name);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_FHEMNAME, fhemName);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_ICON, icon);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_PARENT_ID, parentId);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_TOP_LEFT, readingTopLeft);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_TOP_CENTER, readingTopCenter);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_TOP_RIGHT, readingTopRight);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_BOTTOM_LEFT, readingBottomLeft);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_BOTTOM_CENTER, readingBottomCenter);
-            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_BOTTOM_RIGHT, readingBottomRight);
-            return cv;
-        }
-
         public static LevelsEntry fromDevice(FHEMConfigResponse.FHEMDevice device, int parentId) {
             LevelsEntry entry = new LevelsEntry();
             entry.setName(device.getName());
@@ -130,20 +113,15 @@ public class LevelsTable implements FhemMonkeyTable {
             entry.setParentId(parentId);
             if (device.getInternals().get("TYPE").equals("at")) {
                 return createAt(entry);
-            }
-            else if (device.getInternals().get("TYPE").equals("CUL")) {
+            } else if (device.getInternals().get("TYPE").equals("CUL")) {
                 return createCUL(entry);
-            }
-            else if (device.getInternals().get("TYPE").equals("CUL_HM")) {
+            } else if (device.getInternals().get("TYPE").equals("CUL_HM")) {
                 return createCUL_HM(entry);
-            }
-            else if (device.getInternals().get("TYPE").equals("dummy")) {
+            } else if (device.getInternals().get("TYPE").equals("dummy")) {
                 return createDummy(entry);
-            }
-            else if (device.getInternals().get("TYPE").equals("PRESENCE")) {
+            } else if (device.getInternals().get("TYPE").equals("PRESENCE")) {
                 return createPresence(entry);
-            }
-            else if (device.getInternals().get("TYPE").equals("yowsup")) {
+            } else if (device.getInternals().get("TYPE").equals("yowsup")) {
                 return createYowsup(entry);
             }
 
@@ -180,6 +158,24 @@ public class LevelsTable implements FhemMonkeyTable {
         private static LevelsEntry createYowsup(LevelsEntry entry) {
             entry.setReadingBottomCenter("state");
             return entry;
+        }
+
+        public ContentValues getContentValues() {
+            ContentValues cv = new ContentValues();
+            if (id > -1) {
+                cv.put(LevelsTable.COLUMNNAME_LEVELS_ID, id);
+            }
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_NAME, name);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_FHEMNAME, fhemName);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_ICON, icon);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_PARENT_ID, parentId);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_TOP_LEFT, readingTopLeft);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_TOP_CENTER, readingTopCenter);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_TOP_RIGHT, readingTopRight);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_BOTTOM_LEFT, readingBottomLeft);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_BOTTOM_CENTER, readingBottomCenter);
+            cv.put(LevelsTable.COLUMNNAME_LEVELS_READING_BOTTOM_RIGHT, readingBottomRight);
+            return cv;
         }
 
         public int getId() {

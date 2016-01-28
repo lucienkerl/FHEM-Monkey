@@ -7,10 +7,12 @@ import android.view.View;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.vegie1996.fhem_monkey.R;
@@ -27,12 +29,19 @@ public class MainActivity extends FHEMMonkeyActivity {
     @ViewById(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    @Extra
+    ArrayList<LevelsTable.LevelsEntry> entryList;
+
     @AfterViews
     public void initViews() {
-        FhemDBController dbController = new FhemDBController(getApplicationContext());
-        List<LevelsTable.LevelsEntry> levelsEntryList = dbController.getAllLevelEntryList();
-        if (levelsEntryList.size() > 0) {
-            setAdapter(levelsEntryList);
+        if (entryList == null) {
+            FhemDBController dbController = new FhemDBController(getApplicationContext());
+            List<LevelsTable.LevelsEntry> levelsEntryList = dbController.getAllLevelEntryList();
+            if (levelsEntryList.size() > 0) {
+                setAdapter(levelsEntryList);
+            }
+        } else {
+            setAdapter(entryList);
         }
     }
 
@@ -46,11 +55,11 @@ public class MainActivity extends FHEMMonkeyActivity {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                LevelsTable.LevelsEntry selectedEntry = levelsEntryList.get(position);
+                Log.d("MainActivity", "clicke item with id: " + selectedEntry.getId());
                 FhemDBController controller = new FhemDBController(getApplicationContext());
-                List<LevelsTable.LevelsEntry> entryList = controller.getLevelEntryListWithParentId(levelsEntryList.get(position).getId());
-                setAdapter(entryList);
-                Log.d("MainActivity", "item: " + levelsEntryList.get(position).getId());
+                List<LevelsTable.LevelsEntry> entryList = controller.getLevelEntryListWithParentId(selectedEntry.getId());
+                MainActivity_.intent(MainActivity.this).entryList((ArrayList<LevelsTable.LevelsEntry>) entryList).start();
             }
         }));
         recyclerView.setAdapter(recyclerViewAdapter);

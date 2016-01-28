@@ -53,6 +53,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return deviceList.size();
     }
 
+    public interface MyViewHolderInterface {
+        void onClick(int position);
+    }
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView title;
