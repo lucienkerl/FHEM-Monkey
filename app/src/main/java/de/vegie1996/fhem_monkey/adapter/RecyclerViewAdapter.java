@@ -38,7 +38,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.personName.setText(deviceList.get(position).getName());
+        holder.title.setText(deviceList.get(position).getName());
+        holder.tv1.setText(deviceList.get(position).getReadingTopLeft());
+        holder.tv2.setText(deviceList.get(position).getReadingTopCenter());
+        holder.tv3.setText(deviceList.get(position).getReadingTopRight());
+        holder.tv4.setText(deviceList.get(position).getReadingBottomLeft());
+        holder.tv5.setText(deviceList.get(position).getReadingBottomCenter());
+        holder.tv6.setText(deviceList.get(position).getReadingBottomRight());
+        //holder.icon.setImageResource;
     }
 
     @Override
@@ -48,16 +55,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView personName;
-        TextView personAge;
-        ImageView personPhoto;
+        TextView title;
+        TextView tv1;
+        TextView tv2;
+        TextView tv3;
+        TextView tv4;
+        TextView tv5;
+        TextView tv6;
+        ImageView icon;
 
         ItemViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            personName = (TextView) itemView.findViewById(R.id.person_name);
-            personAge = (TextView) itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView) itemView.findViewById(R.id.person_photo);
+            title = (TextView) itemView.findViewById(R.id.textView_title);
+            tv1 = (TextView) itemView.findViewById(R.id.textView1);
+            tv2 = (TextView) itemView.findViewById(R.id.textView2);
+            tv3 = (TextView) itemView.findViewById(R.id.textView3);
+            tv4 = (TextView) itemView.findViewById(R.id.textView4);
+            tv5 = (TextView) itemView.findViewById(R.id.textView5);
+            tv6 = (TextView) itemView.findViewById(R.id.textView6);
+            icon = (ImageView) itemView.findViewById(R.id.imageView);
         }
     }
 }

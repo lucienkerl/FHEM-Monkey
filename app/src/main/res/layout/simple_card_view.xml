@@ -22,27 +22,70 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/person_photo"
+                android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="16dp" />
 
             <TextView
-                android:id="@+id/person_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/person_photo"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="dummyTitle"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/person_age"
+                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/person_name"
-                android:layout_toRightOf="@+id/person_photo" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:text="dummyText" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView_title"
+                android:text="dummyText" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView_title"
+                android:text="dummyText" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView_title"
+                android:layout_centerHorizontal="true"
+                android:text="dummyText" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:text="dummyText" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="dummyText" />
 
         </RelativeLayout>
 
